@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.dao.mapper.ReplynoteMapper">
+
+	<select id="findAllReplyById" parameterType="int" resultMap="replynotes">
+		<![CDATA[
+		select m.id,m.majornote_title,m.majornote_author,m.majornote_publishtime,m.majornote_content,r.id r_id,r.replynote_username,r.replynote_content,r.replynote_replytime,r.replynote_majornote_id,r.replynote_count
+		from replynote r, majornote m
+		where r.replynote_majornote_id=#{id}
+		]]>
+	</select>
+	
+	<resultMap type="org.lanqiao.entity.Replynote" id="replynotes">
+		<id property="id" column="r_id"/>
+		<result property="username" column="replynote_username"/>
+		<result property="content" column="replynote_content"/>
+		<result property="replytime" column="replynote_replytime"/>
+		<result property="majornoteid" column="replynote_majornote_id"/>
+		<result property="replynotecount" column="replynote_count"/>
+		
+		<association property="majornote" javaType="org.lanqiao.entity.Majornote">
+			<id property="id" column="id"/>
+			<result property="title" column="majornote_title"/>
+			<result property="author" column="majornote_author"/>
+			<result property="publishtime" column="majornote_publishtime"/>
+			<result property="content" column="majornote_content"/>
+		</association>
+	</resultMap>
+	
+	<insert id="addReply" parameterType="org.lanqiao.entity.Replynote">
+		<selectKey >
+			
+		</selectKey>
+		<![CDATA[
+			insert into replynote(id,replynote_username,replynote_content,replynote_replytime,replynote_majornote_id) values(null,#{username},#{content},#{replytime},#{majornoteid})
+		]]>
+	</insert>
+	
+	<update id="addCount" parameterType="hashmap">
+		update replynote  set replynote_count=#{1}
+		where id = #{0}
+	</update>
+	
+	<select id="getCountById" parameterType="int" resultType="int">
+		select  replynote_count
+		from replynote
+		where id = #{id}
+	</select>
+</mapper>
+

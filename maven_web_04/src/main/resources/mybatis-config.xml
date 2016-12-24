@@ -1,0 +1,21 @@
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<mappers>
+<!-- 		<mapper resource="org/lanqiao/mapper/MajornoteMapper.xml"/> -->
+		<!-- 批量加载mapper -->
+		<package name="org.lanqiao.dao.mapper"/>
+	</mappers>
+</configuration>
+
+
+
+
+
+
+
+
+  
+  
+  
+

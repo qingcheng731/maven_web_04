@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.sqlxml.EmpMapper">
+
+	<select id="selectEmp" resultType="org.lanqiao.entity.Emp" >
+		<![CDATA[
+			select * from  emp 
+		]]>
+			
+	</select>
+	<select id="selectEmp2" resultType="hashmap" >
+		<![CDATA[
+			select * from  emp 
+		]]>
+			
+	</select>
+	
+	<select id="selectEmp3" resultMap="selectEmp3" >
+		<![CDATA[
+			select e.*,d.dept_name from  emp2 e 
+			left join dept2 d
+			on e.emp_dept_id = d.id
+		]]>
+	</select>
+	<resultMap type="org.lanqiao.entity.Emp" id="selectEmp3">
+		<id property="id" column="id"/>
+		<result property="name" column="emp_name"/>
+		<result property="email" column="emp_email"/>
+		<association property="dept" javaType="org.lanqiao.entity.Dept">
+			<result property="deptname" column="dept_name"/>
+		</association>
+	</resultMap>
+	
+	
+	<insert id="insertEmp"  useGeneratedKeys="true" keyProperty="id">
+		<selectKey keyProperty="id" resultType="java.lang.Integer">
+			
+		</selectKey>
+		insert into emp(email,name,telphone,deptid) values('qingcheng731@163.com','青城','18370663286','10')
+	</insert>
+	
+	<update id="updateEmp" parameterType="int">
+		update  emp set name='隔壁老王' , email = 'gblw@163.com' where id =#{id} 
+	</update>
+	
+	<delete id="deleteEmp">
+		delete from emp  where id = #{id}
+	</delete>
+	
+	<select id="findByName" resultType="org.lanqiao.entity.Emp">
+		select * from emp where name like '%${value}%'
+	</select>
+	
+</mapper>
+
